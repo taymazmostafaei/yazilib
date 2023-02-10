@@ -1,0 +1,36 @@
+{
+    "singer":"Akif Islamzade",
+    "author":"Rauf Haciyev / Yusif Hesenbey",
+    "title":"Saçlarına Gül Düzüm",
+    "lyrics":"Bağçalarda yasəmənlər verdi baş-başa\nLalələr bürüdü çəməni, düzü\nBu yerlərdə, ay sevgilim, gəzməsək qoşa\nÇəmənlər, çiçəklər sınayar bizi\nSaçlarına gül düzüm\nMənim günüm, gündüzüm!\nSənsiz mən necə dözüm?\nBilmirəm özüm\nSaçlarına gül düzüm\nMənim günüm, gündüzüm!\nSənsiz mən necə dözüm?\nBilmirəm özüm\nPayız oldu, uçdu, getdi durna qatarı\nÇəmənlər rəngini niyə itirdi?\nYox, solmadı ürəyimdə eşqin baharı\nArzular, ümüdlər min gül bitirdi\nSaçlarına gül düzüm\nMənim günüm, gündüzüm!\nMehribanım, əzizim\nGəl, gülsün üzüm\nSaçlarına gül düzüm\nMənim günüm, gündüzüm!\nMehribanım, əzizim\nGəl, gülsün üzüm\nSaçlarına gül düzüm\nMənim günüm, gündüzüm!\nSənsiz mən necə dözüm?\nBilmirəm özüm\nSaçlarına gül düzüm\nMənim günüm, gündüzüm!\nMehribanım, əzizim\nGəl, gülsün üzüm\nGəl, gülsün üzüm\nGəl, gülsün üzüm"
+}
+
+{
+    "title":"Al Məndən Gülüşlərini",
+    "author":"Emin Sabitoğlu",
+    "lyrics":"İstəsən sükuta bürünsün cahan\nHeç nə yox, al məndən gülüşlərini\nAl məndən, ömrümdə əbədi qalan gülüşlərini\nAl məndən, ömrümdən o ani, əbədi görüşlərini\nFəqət, soyuq baxma sən gendən, gözəl!\nFəqət, soyuq baxma sən gendən, gözəl!\nSənsiz günəşsizdir bu göy, bu torpaq\nHər nəyi istəsən, al məndən, gözəl\nTək ümid qoy qalsın\nÜmid – bir dünyalıq gülüşlərindir\nTək ümid qoy qalsın\nO ani, əbədi görüşlərindir\nFəqət, soyuq baxma sən gendən, gözəl!\nFəqət, soyuq baxma sən gendən, gözəl!\nAl geri o əziz günləri məndən\nSədaqət andını al geri məndən\nİstəsən, al məndən yaşıl meşələrin pıçıltısını\nİstəsən, istəsən, al məndən dənizin parıltısını\nFəqət, soyuq baxma sən gendən, gözəl!\nFəqət, soyuq baxma sən gendən, gözəl!\nSənsiz günəşsizdir bu göy, bu torpaq\nHər nəyi istəsən, al məndən, gözəl\nTək ümid qoy qalsın\nÜmid – bir dünyalıq gülüşlərindir\nTək ümid qoy qalsın\nO ani, əbədi görüşlərindir\nFəqət, soyuq baxma sən gendən, gözəl!\nFəqət, soyuq baxma sən gendən, gözəl!"
+}
+
+db.lyrics.find({
+  title: {
+    $text: "sachlarina"
+    }
+})
+db.lyrics.find({$text:{$search:"Lalələr"}})
+db.content.find({$text:{$search:"love"}})  
+db.lyrics.createIndex({title:"text",lyrics:"text"})
+db.lyrics.find({$text: {$regex:/baxçalarda/}})
+db.lyrics.find({lyrics: /baxçalarda/})
+
+**********
+
+
+db.lyrics.find({$text:{$search:/.*baxçalarda.*/}})
+db.lyrics.find({$text:{$regex:/.*baxçalarda.*/}})
+
+
+
+db.lyrics.find({lyrics: /.*baxçalarda.*/})            
+
+
+db.collection.find({$text: {$search: 'similarity in comparison'}}, {score: {$meta: 'textScore'}}).sort({score: {$meta: 'textScore'}})

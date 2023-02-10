@@ -3,8 +3,8 @@ const TelegramBaseController = Telegram.TelegramBaseController
 
 class StartController extends TelegramBaseController {
 
-    startHandler(){
-        $.sendMessage('Xoş gəldin. \n axtarmaqa başla:')
+    startHandler($){
+        $.sendMessage('Xoş gəldin. \naxtarmaqa başla:')
     }
 
     get routes(){
