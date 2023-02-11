@@ -1,8 +1,7 @@
 class Model {
 
-    collection = new.target.name;
-
     constructor() {
+        this.collection = new.target.name;
         return global.database.collection(this.collection);
     }
 
