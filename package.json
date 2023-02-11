@@ -1,8 +1,9 @@
 {
   "dependencies": {
+    "mongodb": "5.0",
     "telegram-node-bot": "^4.0.5"
   },
   "scripts": {
-    "start":"node index.js"
+    "start": "node index.js"
   }
 }
