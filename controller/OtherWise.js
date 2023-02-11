@@ -9,12 +9,18 @@ class OtherWise extends TelegramBaseController {
      */
     handle($) {
         let lyrics = new lyrics()
-        
+
         $.sendMessage('Axtarmaq başlandı...')
 
-        const lyric = lyrics.findOne(result =>{
+        const s = lyrics.findOne()
+        .then((result) => {
+
             console.log(result);
-        });
+            $.sendMessage(result.title)
+
+        }).catch((err) => {
+            console.log(err);
+        });;
 
     }
 

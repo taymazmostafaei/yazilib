@@ -1,11 +1,17 @@
 'use strict'
 
-const { MongoClient } = require("mongodb");
-
 // Connect data base
-const uri = "mongodb://root:5hqZMpJiiUtlOhszqxH6iOsn@may.iran.liara.ir:30332/my-app?authSource=admin&replicaSet=rs0&directConnection=true";
-const client = new MongoClient(uri);
-global.database = client.db('yazilib');
+const { MongoClient } = require("mongodb");
+const uri =
+  "mongodb://root:5hqZMpJiiUtlOhszqxH6iOsn@may.iran.liara.ir:30332/my-app?authSource=admin&replicaSet=rs0&directConnection=true";
+
+const client = new MongoClient(uri, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+client.connect().then(()=>{
+    global.database = client.db('yazilib');
+})
 
 // Connect Telegram
 const Telegram = require('telegram-node-bot')
