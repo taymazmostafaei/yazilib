@@ -8,29 +8,23 @@ class OtherWise extends TelegramBaseController {
     /**
      * @param {Scope} $
      */
-    handle($) {
+    async handle($) {
         let ly = new lyrics()
 
-        $.sendMessage('Axtarmaq başlandı🔎')
+        await $.sendMessage('Axtarmaq başlandı🔎')
 
-        ly.find({ title: $.text.message })
-            .then((result) => {
+        let result = await ly.find({ $text: { $search: $.message.text } }).toArray()
 
-                if (!result) {
+        if (result.length == 0) {
 
-                    $.sendPhoto({ path: './media/notfound.gif'})
-                    $.sendMessage('Heç nə tapılmadi.')
-                    return;
-                }
+            $.sendPhoto({ path: './media/notfound.gif' })
+            $.sendMessage('Heç nə tapılmadi.')
+            return;
+        }
 
-                ejs.renderFile('./template/search.ejs', { lyrics: result }, null, (err, message) => {
-                    $.sendMessage(message || err)
-                });
-
-
-            }).catch((err) => {
-                console.log(err);
-            });
+        ejs.renderFile('./template/search.ejs', { lyrics: result }, null, (err, message) => {
+            $.sendMessage(message || err)
+        });
 
     }
 
