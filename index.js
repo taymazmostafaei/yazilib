@@ -11,6 +11,7 @@ const client = new MongoClient(uri, {
 });
 client.connect().then(()=>{
     global.database = client.db('yazilib');
+    console.log('db connected 🔗');
 })
 
 // Connect Telegram
