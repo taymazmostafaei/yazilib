@@ -1,9 +1,8 @@
 <% lyrics.forEach((lyric, index) => { %>
-<%= index || '0' %>.
 <% if (index % 2) { %>
 📙 <%= lyric.title || '' %>
 <%} else { %>
 📘 <%= lyric.title || '' %>
 <% } %>
----------------------
-<% }) %>
+📖 /g_<%= search.encode(lyric._id)  || '' %>
+---------------------<% }) %>

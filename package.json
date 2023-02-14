@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "ejs": "^3.1.8",
+    "id-shorter": "^0.1.2",
     "mongodb": "3.7",
     "telegram-node-bot": "^4.0.5"
   },
