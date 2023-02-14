@@ -22,6 +22,12 @@ class OtherWise extends TelegramBaseController {
             return;
         }
 
+        if (($.message.text).length >= 50) {
+            $.sendPhoto({ path: './media/cat-walking.mp4' })
+            $.sendMessage('Qısa yazın.')
+            return;
+        }
+
         let ly = new lyrics()
         if (($.message.text).split('_')[0] == '/g') {
 
@@ -31,6 +37,9 @@ class OtherWise extends TelegramBaseController {
             let lyric = await ly.findOne({ _id: ObjectID(lyricsId) })
 
             await $.sendMessage(lyric.lyrics)
+            ejs.renderFile('./template/lyric.ejs', { lyric: lyric}, null, (err, message) => {
+                $.sendMessage(message || err)
+            });
             return;
         }
 
