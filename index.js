@@ -22,6 +22,7 @@ const tg = new Telegram.Telegram('6193401349:AAEO7PMl78qwyqfqDRaCFcSLbd_S2TqXhbM
 //Load app class
 const  StartController = require('./controller/Start'),
     OtherWiseController = require('./controller/OtherWise'),
+    NewController = require('./controller/new'),
     PingController = require('./controller/Ping');
 
 
@@ -29,6 +30,10 @@ tg.router
     .when(
         new TextCommand('ping', 'pingCommand'),
         new PingController()
+    )
+    .when(
+        new TextCommand('new', 'newCommand'),
+        new NewController()
     )
     .when(
         new TextCommand('start', 'startCommand'),

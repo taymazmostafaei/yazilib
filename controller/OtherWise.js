@@ -36,7 +36,6 @@ class OtherWise extends TelegramBaseController {
 
             let lyric = await ly.findOne({ _id: ObjectID(lyricsId) })
 
-            await $.sendMessage(lyric.lyrics)
             ejs.renderFile('./template/lyric.ejs', { lyric: lyric}, null, (err, message) => {
                 $.sendMessage(message || err)
             });
