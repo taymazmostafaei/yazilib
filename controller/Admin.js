@@ -1,10 +1,12 @@
 
 class Admin {
 
-    constructor($, ly) {
+    constructor($, ly, ObjectID, mongoDBId) {
         this.isAdmin = true
         this.ly = ly
         this.$ = $
+        this.ObjectID = ObjectID
+        this.mongoDBId = mongoDBId
     }
 
     editLyrics() {
@@ -12,10 +14,11 @@ class Admin {
             this.$.runInlineMenu({
                 layout: 2,
                 method: 'sendMessage', 
-                params: ['text'], 
+                params: ['görünmələr:'], 
                 menu: [
                     {
                         text: 'Yenilə',
+                        message: 'Hankisin Yeni ləmək istiyirsən?',
                         layout: 4,
                         menu: [
                             {
@@ -32,7 +35,7 @@ class Admin {
                                 callback: () => {
                                     this.$.runForm(LyricsForm, async (result) => {
 
-                                        this.$.sendMessage('yep')
+                                        this.$.sendMessage(this.$.message.text)
                                     })
                                 }
                             },
@@ -63,17 +66,26 @@ class Admin {
                         menu: [
                             {
                                 text: 'Hən',
-                                callback: () => {
+                                callback: async() => {
 
-                                    this.$.sendMessage('yep')
+                                    let sId = (this.$.message.text).split('_')[1]
+                                    let lyricsId = this.mongoDBId.decode(sId)
 
+                                    let result = await this.ly.deleteOne({ _id: this.ObjectID(lyricsId) })
+                                    if (!result) {
+                                
+                                        this.$.sendMessage('❗ Uğursuz Oldu.')
+                                        return
+                                    }
+
+                                    this.$.sendMessage('✅ Uğurla yazi silindi.')
                                 }
                             },
                             {
                                 text: 'Yox',
                                 callback: () => {
 
-                                    this.$.sendMessage('yep')
+                                    this.$.sendMessage('OK')
                                 }
                             }
                         ]

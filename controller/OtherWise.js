@@ -37,11 +37,16 @@ class OtherWise extends TelegramBaseController {
 
             let lyric = await ly.findOne({ _id: ObjectID(lyricsId) })
 
+            if (!lyric) {
+                $.sendMessage('Yazını yenidən axtarmağa çalışın.')
+                return
+            }
+
             ejs.renderFile('./template/lyric.ejs', { lyric: lyric}, null, (err, message) => {
                 $.sendMessage(message || err)
             });
 
-            (new AdminOperate($, ly)).editLyrics()
+            (new AdminOperate($, ly, ObjectID, mongoDBId)).editLyrics()
             
             return;
         }
