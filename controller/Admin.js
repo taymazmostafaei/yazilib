@@ -1,8 +1,17 @@
+const Admins = require('../model/Admins')
+
 
 class Admin {
 
     constructor($, ly, ObjectID, mongoDBId) {
-        this.isAdmin = true
+        let admins = new Admins();
+        this.isAdmin = false
+
+        if (admins.findOne({ ChatId : $.chatId })) {
+
+            this.isAdmin = true
+        }
+
         this.ly = ly
         this.$ = $
         this.ObjectID = ObjectID
