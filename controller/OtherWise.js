@@ -6,8 +6,9 @@ var ShortId = require('id-shorter');
 var mongoDBId = ShortId({
     isFullId: true
 });
-
+const AdminOperate = require('./Admin');
 const TelegramBaseController = Telegram.TelegramBaseController
+
 
 class OtherWise extends TelegramBaseController {
     /**
@@ -39,6 +40,9 @@ class OtherWise extends TelegramBaseController {
             ejs.renderFile('./template/lyric.ejs', { lyric: lyric}, null, (err, message) => {
                 $.sendMessage(message || err)
             });
+
+            (new AdminOperate($, ly)).editLyrics()
+            
             return;
         }
 

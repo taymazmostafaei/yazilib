@@ -23,7 +23,7 @@ class NewController extends TelegramBaseController {
             },
 
             lyric: {
-                q: 'Yazının ... savla',
+                q: 'Yazının bədənin savla',
                 error: 'Yanlış sav, yenidən savla:',
                 validator: (message, callback) => {
                     if (message.text) {
@@ -74,11 +74,11 @@ class NewController extends TelegramBaseController {
             })
 
             if (insertResult) {
-                $.sendMessage('Uğurla yeni yazi artıldı.')
+                $.sendMessage('✅ Uğurla yeni yazi artıldı.')
                 return
             }
 
-            $.sendMessage('Uğursuz Artırma.')
+            $.sendMessage('❗ Uğursuz Artırma.')
         })
 
     }
