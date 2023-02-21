@@ -19,6 +19,17 @@ const Telegram = require('telegram-node-bot')
 const TextCommand = Telegram.TextCommand
 const tg = new Telegram.Telegram('6193401349:AAEO7PMl78qwyqfqDRaCFcSLbd_S2TqXhbM')
 
+// Connect Redis
+const { createClient } = require('redis');
+const redis = createClient({
+    url: 'redis://:G7Y0rXDnuJGZxFl6UFdwFeLF@may.iran.liara.ir:34132/0'
+  })
+redis.on('error', err => console.log('Redis Client Error', err));
+redis.connect().then(()=>{
+    global.redis = redis
+    console.log('redis is ready.');
+});
+
 //Load app class
 const  StartController = require('./controller/Start'),
     OtherWiseController = require('./controller/OtherWise'),

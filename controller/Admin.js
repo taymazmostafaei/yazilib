@@ -1,16 +1,7 @@
-const Admins = require('../model/Admins')
-
 
 class Admin {
 
     constructor($, ly, ObjectID, mongoDBId) {
-        let admins = new Admins();
-        this.isAdmin = false
-
-        if (admins.findOne({ ChatId : $.chatId })) {
-
-            this.isAdmin = true
-        }
 
         this.ly = ly
         this.$ = $
@@ -18,12 +9,13 @@ class Admin {
         this.mongoDBId = mongoDBId
     }
 
-    editLyrics() {
-        if (this.isAdmin) {
+    async editLyrics() {
+
+        if (await global.redis.exists(`admin:${this.$.chatId}`)) {
             this.$.runInlineMenu({
                 layout: 2,
-                method: 'sendMessage', 
-                params: ['görünmələr:'], 
+                method: 'sendMessage',
+                params: ['görünmələr:'],
                 menu: [
                     {
                         text: 'Yenilə',
@@ -75,14 +67,14 @@ class Admin {
                         menu: [
                             {
                                 text: 'Hən',
-                                callback: async() => {
+                                callback: async () => {
 
                                     let sId = (this.$.message.text).split('_')[1]
                                     let lyricsId = this.mongoDBId.decode(sId)
 
                                     let result = await this.ly.deleteOne({ _id: this.ObjectID(lyricsId) })
                                     if (!result) {
-                                
+
                                         this.$.sendMessage('❗ Uğursuz Oldu.')
                                         return
                                     }
