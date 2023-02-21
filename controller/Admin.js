@@ -27,7 +27,23 @@ class Admin {
                                 callback: () => {
                                     this.$.runForm(titleForm, async (result) => {
 
-                                        this.$.sendMessage('yep')
+                                        const updateDoc = {
+                                            $set: {
+                                                title: result.title,
+                                            },
+                                        };
+
+                                        let sId = (this.$.message.text).split('_')[1]
+                                        let lyricsId = this.mongoDBId.decode(sId)
+    
+                                        let isUpdated = await this.ly.updateOne({ _id: this.ObjectID(lyricsId) }, updateDoc)
+                                        if (isUpdated) {
+
+                                            this.$.sendMessage('✅ Uğurla günləşdi.')
+                                            return
+                                        }
+                                        this.$.sendMessage('❗ Uğursuz Oldu.')
+
                                     })
                                 }
                             },
@@ -36,7 +52,22 @@ class Admin {
                                 callback: () => {
                                     this.$.runForm(LyricsForm, async (result) => {
 
-                                        this.$.sendMessage(this.$.message.text)
+                                        const updateDoc = {
+                                            $set: {
+                                                lyrics: result.lyric,
+                                            },
+                                        };
+
+                                        let sId = (this.$.message.text).split('_')[1]
+                                        let lyricsId = this.mongoDBId.decode(sId)
+    
+                                        let isUpdated = await this.ly.updateOne({ _id: this.ObjectID(lyricsId) }, updateDoc)
+                                        if (isUpdated) {
+
+                                            this.$.sendMessage('✅ Uğurla günləşdi.')
+                                            return
+                                        }
+                                        this.$.sendMessage('❗ Uğursuz Oldu.')
                                     })
                                 }
                             },
@@ -45,7 +76,22 @@ class Admin {
                                 callback: () => {
                                     this.$.runForm(AuthorForm, async (result) => {
 
-                                        this.$.sendMessage('yep')
+                                        const updateDoc = {
+                                            $set: {
+                                                author: result.author,
+                                            },
+                                        };
+
+                                        let sId = (this.$.message.text).split('_')[1]
+                                        let lyricsId = this.mongoDBId.decode(sId)
+    
+                                        let isUpdated = await this.ly.updateOne({ _id: this.ObjectID(lyricsId) }, updateDoc)
+                                        if (isUpdated) {
+
+                                            this.$.sendMessage('✅ Uğurla günləşdi.')
+                                            return
+                                        }
+                                        this.$.sendMessage('❗ Uğursuz Oldu.')
                                     })
                                 }
                             },
@@ -54,7 +100,22 @@ class Admin {
                                 callback: () => {
                                     this.$.runForm(SingerForm, async (result) => {
 
-                                        this.$.sendMessage('yep')
+                                        const updateDoc = {
+                                            $set: {
+                                                singer: result.singer,
+                                            },
+                                        };
+
+                                        let sId = (this.$.message.text).split('_')[1]
+                                        let lyricsId = this.mongoDBId.decode(sId)
+    
+                                        let isUpdated = await this.ly.updateOne({ _id: this.ObjectID(lyricsId) }, updateDoc)
+                                        if (isUpdated) {
+
+                                            this.$.sendMessage('✅ Uğurla günləşdi.')
+                                            return
+                                        }
+                                        this.$.sendMessage('❗ Uğursuz Oldu.')
                                     })
                                 }
                             },

@@ -9,13 +9,16 @@ class StartController extends TelegramBaseController {
         $.sendMessage('Xoş gəldin. \naxtarmaqa başla:')
 
         let redis = global.redis
-        if (await redis.exists(`admin:${$.chatId}`)) {
+        let admin = await redis.exists(`admin:${$.chatId}`)
 
+        if (admin) {
+            
             return;
         }
         
         let admins = new Admins();
-        let result = await admins.findOne({ ChatId : $.chatId })
+        let result = await admins.findOne({ ChatId : `${$.chatId}` })
+
         if (result) {
 
             let redis = global.redis
