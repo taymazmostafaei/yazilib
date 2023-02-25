@@ -6,7 +6,13 @@ class NewController extends TelegramBaseController {
     /**
      * @param {Scope} $
      */
-    newHandler($) {
+    async newHandler($) {
+
+        if (! await global.redis.exists(`admin:${$.chatId}`)) {
+
+            $.sendMessage('Siz yeni yazı Artıra bilməsiz.')
+            return
+        }
 
         const form = {
             title: {
