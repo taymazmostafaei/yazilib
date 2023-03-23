@@ -8,12 +8,6 @@ class NewController extends TelegramBaseController {
      */
     async newHandler($) {
 
-        if (! await global.redis.exists(`admin:${$.chatId}`)) {
-
-            $.sendMessage('Siz yeni yazı Artıra bilməsiz.')
-            return
-        }
-
         const form = {
             title: {
                 q: 'Yazının adını savla',
@@ -68,25 +62,31 @@ class NewController extends TelegramBaseController {
             },
         }
 
-        $.runForm(form, async (result) => {
+        if (await global.redis.exists(`admin:${$.chatId}`)) {
 
-            let ly = new lyrics()
-            let insertResult = await ly.insertOne({
+            $.runForm(form, async (result) => {
 
-                title: result.title,
-                lyrics: result.lyric,
-                singer: result.singer,
-                author: result.author
+                let ly = new lyrics()
+                let insertResult = await ly.insertOne({
+
+                    title: result.title,
+                    lyrics: result.lyric,
+                    singer: result.singer,
+                    author: result.author
+                })
+
+                if (insertResult) {
+                    $.sendMessage('✅ Uğurla yeni yazi artıldı.')
+                    return
+                }
+
+                $.sendMessage('❗ Uğursuz Artırma.')
             })
-
-            if (insertResult) {
-                $.sendMessage('✅ Uğurla yeni yazi artıldı.')
-                return
-            }
-
-            $.sendMessage('❗ Uğursuz Artırma.')
-        })
-
+        } else {
+            
+            $.sendMessage('Siz yeni yazı Artıra bilməsiz.')
+            return
+        }
     }
 
     get routes() {
