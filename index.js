@@ -2,8 +2,7 @@
 
 // Connect data base
 const { MongoClient } = require("mongodb");
-const uri =
-  "mongodb://root:5hqZMpJiiUtlOhszqxH6iOsn@may.iran.liara.ir:30332/my-app?authSource=admin&replicaSet=rs0&directConnection=true";
+const uri = "mongodb://localhost:27017/yazilib";
 
 const client = new MongoClient(uri, {
   useNewUrlParser: true,
@@ -17,12 +16,13 @@ client.connect().then(()=>{
 // Connect Telegram
 const Telegram = require('telegram-node-bot')
 const TextCommand = Telegram.TextCommand
-const tg = new Telegram.Telegram('6193401349:AAEO7PMl78qwyqfqDRaCFcSLbd_S2TqXhbM')
+const tg = new Telegram.Telegram('key')
 
 // Connect Redis
 const { createClient } = require('redis');
 const redis = createClient({
-    url: 'redis://:G7Y0rXDnuJGZxFl6UFdwFeLF@may.iran.liara.ir:34132/0'
+    host: 'localhost',
+    port: 6379,
   })
 redis.on('error', err => console.log('Redis Client Error', err));
 redis.connect().then(()=>{
