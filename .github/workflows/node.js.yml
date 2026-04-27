@@ -1,27 +1,20 @@
-name: Test Proxy
-on: workflow_dispatch
+name: Run MTProto Proxy
+on: [push]
 
 jobs:
   run-proxy:
     runs-on: ubuntu-latest
     steps:
-      - name: Install dependencies
+      - name: Start Proxy Container
         run: |
-          sudo apt-get update
-          sudo apt-get install -y mtproto-proxy cloudflared
+          # Example: Using a popular Docker image for MTProto
+          docker run -d -p 443:443 -e SECRET=aaahaaah telegrammessenger/proxy
       
-      - name: Start MTProto Proxy
+      - name: Expose Proxy (e.g., via Ngrok)
         run: |
-          # Generate a secret
-          SECRET=$(head -c 16 /dev/urandom | xxd -ps)
-          echo "Secret: $SECRET"
-          # Start proxy in background
-          mtproto-proxy -p 8888 -S $SECRET --aes-pwd proxy-secret.conf /etc/mtproto-proxy/mtproto-proxy.conf -M 1 &
+          # You MUST use a tunnel to allow external clients to connect
+          # because the GitHub runner doesn't have a public static IP
+          ./ngrok tcp 443 --authtoken ${{ secrets.NGROK_TOKEN }}
           
-      - name: Start Cloudflare Tunnel
-        run: |
-          # Expose local port 8888 to public internet
-          cloudflared tunnel --url tcp://localhost:8888
-          
-      - name: Keep Alive
-        run: sleep 21600 # Keeps the job running for 6 hours
+      - name: Keep job alive
+        run: sleep 6h
